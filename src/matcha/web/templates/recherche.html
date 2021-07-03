@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Ma recherche{% endblock %}
+{% block content %}
+{% include 'nav.html' %}
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+<style>
+  input:invalid {
+    border: 2px dashed red;
+  }
+
+  input:valid {
+    border: 1px solid black;
+  }
+
+  .conteneur {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+  }
+
+  .contenu {
+    min-width: 600px;
+    height: 600px;
+  }
+
+  .checkbox_box {
+    column-width: 7rem;
+    flex-grow: 2;
+    height: 500px;
+  }
+</style>
+<br><br>
+<h1>Je recherche... </h1>
+<br><br>
+<div class="conteneur">
+  <div class="contenu">
+    <form method="post">
+      <div>
+
+        <input type="radio" id="Male" name="sexe" value="Male" {% if sex_to_find=='Male' %} checked {% endif %}>
+        <label for="Male">un homme</label>
+        <input type="radio" id="Female" name="sexe" value="Female" {% if sex_to_find=='Female' %} checked {% endif %}>
+        <label for="Female">une femme</label>&emsp;&emsp;&emsp;&emsp;&emsp;
+        <button type="submit" class="btn btn-primary btn-lg mb-2">Chercher</button>
+      </div><br>
+      <table>
+        <tr>
+          <td>Age compris entre </td>
+          <td><input type="number" name="agemin" min="18" max="110" size=8 /> et <input type="number" name="agemax"
+              min="18" max="110" size=8 /></td>
+        </tr>
+        <tr>
+          <td>Popularite entre </td>
+          <td><input type="number" name="popmin" min="0" max="100" value=0 /> et <input type="number" value=100
+              name="popmax" min="0" max="100" /></td>
+        </tr>
+      </table>
+      <p>Localisation <input type="hidden" name="longlat" id="coor" visible=false> dans un rayon de <input type="number"
+          name='km' value=20 min="0" max="20000">kms autour de votre position, <br> ou bien autour du point choisi
+        sur la carte</p>
+      <br><strong>Centres d'interets :</strong><br><br>
+      <div class="checkbox_box">
+        <fieldset>
+          {% for topic in topics %}
+          <input type="checkbox" id={{topic}} name="interest" value={{topic}} /><label
+            for={{topic}}>{{topic}}</label><br>
+          {% endfor %}
+        </fieldset>
+      </div>
+ </form>
+ </div>
+   
+    
+    <div id="macarte" class="contenu"></div>
+  
+  </div>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/leaflet.css') }}" />
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
+    
+    
+    <script>
+
+      var carte = L.map('macarte').setView([{{ latitude }}, {{ longitude }}], 11);
+      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(carte);
+      var marker = L.marker([{{ latitude }}, {{ longitude }}]).addTo(carte);
+      carte.on('click', placerMarqueur);
+
+      function placerMarqueur(e) {
+        marker.setLatLng(e.latlng);
+        document.getElementById('coor').value = e.latlng;
+      };
+    </script>
+    {% endblock %}

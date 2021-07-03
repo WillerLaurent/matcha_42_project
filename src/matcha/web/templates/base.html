@@ -1,0 +1,87 @@
+<?php
+  /**
+   * Empêcher la mise en cache des pages avec PHP
+   *
+   * La fonction doit-être appellée avant toute balise HTML,
+   * espace blanc, echo(), print()...
+   *
+   * @param : void
+   * @return : void
+   */
+  function empecherLaMiseEnCache()
+  {
+    header('Pragma: no-cache');
+    header('Expires: 0');
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+    header('Cache-Control: no-cache, must-revalidate');
+  }
+?>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" type="image/x-icon" href="{{url_for('static', filename='coeur.ico')}}" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+
+        <!-- Styles -->
+        <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/reset.css') }}"> -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/matching.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/navigation.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/accueil.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/dislike.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+        <!-- Bibliotheque Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+        <!-- SocketIO JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
+
+        <!-- Connect users -->
+        <!-- <script src="{{ url_for('static', filename='scripts/connect_users.js')}}"></script> -->
+
+        <!-- Get username -->
+        <script>
+            const username = `{{ username }}`;
+        </script>
+
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background: url("{{url_for('static', filename='polynesie.jpg')}}") no-repeat center fixed;
+                background-size: cover;
+            }
+        </style>
+        <title>{% block title %}{% endblock %} </title>
+    </head>
+
+    <header>le site de Matcha</header><br>
+
+    <body>
+        <div class="container-fluid">
+
+            {% block content %}{% endblock %}
+
+        </div>
+    </body>
+    <!-- <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    L'amour est enfant de boheme... L'amour est un oiseau rebelle... L'amour est aveugle... Vivre d'amour et d'eau fraiche...
+                </div>
+            </div>
+        </div>
+    </footer> -->
+
+    </html>

@@ -1,0 +1,48 @@
+<nav >
+    <!-- Refresh page -->
+    <script src="{{ url_for('static', filename='scripts/refresh_page.js')}}"></script>
+
+    <div class="topnav" id="myTopnav">
+  
+            <a id="nav-username" class="active">{{session['user']['name']}}</a>
+        
+            <a href="{{ url_for('accueil')}}" >Accueil</a>
+        
+            <a href="{{ url_for('photo')}}" >Mes photos</a>
+       
+            <a href="{{ url_for('profil')}}" >Mon profil</a>
+        
+            <a href="{{ url_for('recherche')}}" >Recherche</a>
+       
+            <a href="{{ url_for('chat')}}" >Messages
+            <span id="nb_messages" class="badge badge-pill badge-warning count-notif"></span></a>
+        
+            <a href="{{ url_for('like')}}" >Likes  
+            <span id="nb_likes" class="badge badge-pill badge-warning count-notif"></span></a>
+        
+            <a href="{{ url_for('visites', like='no')}}" >Visites
+                    <span id="nb_visites" class="badge badge-pill badge-warning count-notif"></span></a>
+        
+            <a href="{{ url_for('dislike')}}" >Dislikes
+                    <span id="nb_dislikes" class="badge badge-pill badge-warning count-notif"></span></a>
+        
+            <a href="{{ url_for('logout')}}" >Deconnexion</a>
+        
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fa fa-bars fa-1x"></i>
+              </a>
+        
+
+    
+</div>
+    <script>
+        function myFunction() {
+          var x = document.getElementById("myTopnav");
+          if (x.className === "topnav") {
+            x.className += " responsive";
+          } else {
+            x.className = "topnav";
+          }
+        }
+        </script>
+</nav>
